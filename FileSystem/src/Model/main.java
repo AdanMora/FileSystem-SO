@@ -18,6 +18,7 @@ public class main {
         File_System file_system = new File_System();
         
         file_system.CRT("holi", 100, 5);
+        file_system.FLE("aaaa", ".txt", "asdasdad");
         
     }
     

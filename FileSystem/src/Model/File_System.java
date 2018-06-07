@@ -5,6 +5,10 @@
  */
 package Model;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Adán
@@ -23,13 +27,19 @@ public class File_System {
         return true;
     }
     
-    public boolean FLE(String nombre, String extension, String contenido){
-        if (true){
-            
-            return true;
-        } else {
-            return false;
+    public boolean FLE(String nombre, String extension, String contenido) {
+        try {
+            if (disco.hayEspacio()){
+                
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(File_System.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return false;
     }
     
     

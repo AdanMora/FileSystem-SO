@@ -25,7 +25,29 @@ public class Disco_Virtual {
         this.nombre_Disco = System.getProperty("user.home") + "/Desktop/" + nombre_Disco + ".txt";
         this.tam_Sector = tamanio_Sector;
         this.cant_Sectores = cant_Sectores;
-        init_Archivo();
+        //init_Archivo();
+    }
+
+    private ArrayList<String> get_Contenido_Disco(){
+        ArrayList<String> sb = new ArrayList();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(nombre_Disco));
+            
+            
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.add(line);
+                line = br.readLine();
+            }
+            
+            br.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return sb;
     }
     
     private boolean init_Archivo(){
@@ -52,6 +74,19 @@ public class Disco_Virtual {
             System.out.println(e);
         }
         
+        return false;
+    }
+
+    public boolean hayEspacio() throws IOException {
+        ArrayList<String> contenido = get_Contenido_Disco();
+        for (String s : contenido) {
+            System.out.println(s.charAt(0));
+            if (s.charAt(0) == '0'){
+                System.out.println("c:");
+                return true;
+            }
+        }
+        System.out.println(":c");
         return false;
     }
     
