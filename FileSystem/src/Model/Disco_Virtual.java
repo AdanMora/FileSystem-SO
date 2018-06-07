@@ -30,8 +30,9 @@ public class Disco_Virtual {
     
     private boolean init_Archivo(){
         try {
-            FileReader fileR = new FileReader(nombre_Disco);
-            FileWriter fileW = new FileWriter(nombre_Disco);
+            File file = new File(nombre_Disco);
+            boolean fvar = file.createNewFile();
+            
             ArrayList<String> buffer = new ArrayList();
             String b;
             for (int i = 0; i < cant_Sectores; i++) {

@@ -17,7 +17,7 @@ public class main {
     public static void main(String[] args) {
         File_System file_system = new File_System();
         
-        file_system.CRT("YOGUR", 10, 20);
+        file_system.CRT("holi", 100, 5);
         
     }
     
