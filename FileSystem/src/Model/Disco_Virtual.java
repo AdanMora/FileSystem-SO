@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +27,24 @@ public class Disco_Virtual {
         this.nombre_Disco = System.getProperty("user.home") + "/Desktop/" + nombre_Disco + ".txt";
         this.tam_Sector = tamanio_Sector;
         this.cant_Sectores = cant_Sectores;
-        //init_Archivo();
+        init_Archivo();
+    }
+    
+    public boolean hayEspacio(String contenido) throws IOException {
+        ArrayList<String> disco = get_Contenido_Disco();
+        float x = contenido.length() / tam_Sector;
+        System.out.println(contenido.length());
+        System.out.println(tam_Sector);
+        System.out.println(contenido.length() / tam_Sector);
+        if (x > cant_Sectores){
+            return false;
+        }
+        for (String s : disco) {
+            if (s.charAt(0) == '0'){
+                return true;
+            }
+        }
+        return false;
     }
 
     private ArrayList<String> get_Contenido_Disco(){
@@ -76,18 +95,56 @@ public class Disco_Virtual {
         
         return false;
     }
-
-    public boolean hayEspacio() throws IOException {
-        ArrayList<String> contenido = get_Contenido_Disco();
-        for (String s : contenido) {
-            System.out.println(s.charAt(0));
-            if (s.charAt(0) == '0'){
-                System.out.println("c:");
-                return true;
-            }
+    
+    private boolean escribir_Archivo(ArrayList<String> contenido){
+        Path path = Paths.get(nombre_Disco);
+        try {
+            Files.write(path, contenido, Charset.forName("UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(Disco_Virtual.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(":c");
         return false;
+    }
+
+    public ArrayList insertarArchivo(String nombre, String extension, String contenido) {
+        
+        ArrayList<Integer> sectores = new ArrayList();
+        try {
+            if (hayEspacio(contenido)){
+                String buffer = "";
+                ArrayList<String> lineas = get_Contenido_Disco();
+                for (int i = 0; i < cant_Sectores; i++) {
+                    buffer = "";
+                    if (lineas.get(i).charAt(0) == '0' && !contenido.isEmpty()){
+                        if(contenido.length() >= tam_Sector){
+                            buffer = contenido.substring(0, tam_Sector);
+                            contenido = contenido.substring(tam_Sector);
+                            lineas.set(i, buffer);
+                            sectores.add(i);
+                        } else {
+                            buffer = contenido + lineas.get(i);
+                            lineas.set(i, buffer.substring(0, tam_Sector - 1));
+                            contenido = "";
+                        }
+                    } 
+                }
+                
+                escribir_Archivo(lineas);
+                
+                return sectores;
+            } else{
+                return null;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Disco_Virtual.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    private void printArray(ArrayList<String> lista){
+        for (String x : lista) {
+            System.out.println(x);
+        }
     }
     
     

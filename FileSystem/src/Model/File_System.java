@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,8 +30,9 @@ public class File_System {
     
     public boolean FLE(String nombre, String extension, String contenido) {
         try {
-            if (disco.hayEspacio()){
-                
+            if (disco.hayEspacio(contenido)){
+                ArrayList<Integer> sectores = disco.insertarArchivo(nombre, extension, contenido);
+                path_Actual.insertar_Archivo(nombre, extension, contenido.length(), sectores);
                 return true;
             } else {
                 return false;
@@ -41,6 +43,8 @@ public class File_System {
         
         return false;
     }
+    
+    // public boolean
     
     
     

@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -20,6 +21,16 @@ public class Carpeta {
         this.nombre = nombre;
         this.carpetas = new ArrayList();
         this.archivos = new ArrayList();
+    }
+
+    void insertar_Archivo(String nombre, String extension, int tamanio, ArrayList sectores) {
+        Date date = new Date();
+        archivos.add(new Archivo(nombre, extension, date, date, tamanio, sectores));
+    }
+    
+    void insertar_Carpeta(String nombre) {
+        Date date = new Date();
+        carpetas.add(new Carpeta(nombre));
     }
     
 }

@@ -17,8 +17,8 @@ public class main {
     public static void main(String[] args) {
         File_System file_system = new File_System();
         
-        file_system.CRT("holi", 100, 5);
-        file_system.FLE("aaaa", ".txt", "asdasdad");
+        file_system.CRT("holi", 20, 5);
+        file_system.FLE("aaaa", ".txt", "One Ring to rule them all, One ring to find them; One ring to bring them all and in the darkness bind them.");
         
     }
     

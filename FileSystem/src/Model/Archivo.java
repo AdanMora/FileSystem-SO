@@ -20,13 +20,13 @@ public class Archivo {
     int tamanio;
     ArrayList<Integer> sectores;
 
-    public Archivo(String nombre, String extension, Date fch_Creacion, Date fch_Modificacion, int tamanio) {
+    public Archivo(String nombre, String extension, Date fch_Creacion, Date fch_Modificacion, int tamanio, ArrayList sectores) {
         this.nombre = nombre;
         this.extension = extension;
         this.fch_Creacion = fch_Creacion;
         this.fch_Modificacion = fch_Modificacion;
         this.tamanio = tamanio;
-        this.sectores = new ArrayList();
+        this.sectores = sectores;
     }
     
     
