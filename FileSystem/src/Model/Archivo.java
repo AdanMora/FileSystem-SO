@@ -5,7 +5,9 @@
  */
 package Model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -19,6 +21,7 @@ public class Archivo {
     Date fch_Modificacion;
     int tamanio;
     ArrayList<Integer> sectores;
+    SimpleDateFormat format = new SimpleDateFormat ("dd/MM/yyyy hh:mm:ss");
 
     public Archivo(String nombre, String extension, Date fch_Creacion, Date fch_Modificacion, int tamanio, ArrayList sectores) {
         this.nombre = nombre;
@@ -28,7 +31,21 @@ public class Archivo {
         this.tamanio = tamanio;
         this.sectores = sectores;
     }
-    
-    
+
+    void set_Sectores(ArrayList<Integer> sectores) {
+        this.sectores = sectores;
+    }
+
+    public ArrayList<String> get_Propiedades() {
+           return new ArrayList<>(Arrays.asList(nombre, extension, format.format(fch_Creacion), format.format(fch_Modificacion), String.valueOf(tamanio)));
+    }
+
+    void setFecha_Modificacion(Date date) {
+        this.fch_Modificacion = date;
+    }
+
+    void setTamanio(int tamanio) {
+        this.tamanio = tamanio;
+    }
     
 }

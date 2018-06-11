@@ -23,14 +23,44 @@ public class Carpeta {
         this.archivos = new ArrayList();
     }
 
-    void insertar_Archivo(String nombre, String extension, int tamanio, ArrayList sectores) {
+    public void insertar_Archivo(String nombre, String extension, int tamanio, ArrayList sectores) {
         Date date = new Date();
         archivos.add(new Archivo(nombre, extension, date, date, tamanio, sectores));
     }
     
-    void insertar_Carpeta(String nombre) {
-        Date date = new Date();
+    public void insertar_Carpeta(String nombre) {
         carpetas.add(new Carpeta(nombre));
+    }
+
+    public Carpeta getCarpeta(String carpeta) {
+        for (Carpeta c : carpetas) {
+            if (c.nombre == carpeta){
+                return c;
+            }
+        }
+        return null;
+    }
+    
+    public Archivo getArchivo(String archivo) {
+        for (Archivo a : archivos) {
+            if (a.nombre.equals(archivo)){
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<String> getLista() {
+        ArrayList<String> lista = new ArrayList();
+        for (Carpeta c : carpetas) {
+            lista.add(c.nombre);
+        }
+        
+        for (Archivo a : archivos) {
+            lista.add(a.nombre + a.extension);
+        }
+        
+        return lista;
     }
     
 }

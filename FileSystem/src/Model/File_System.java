@@ -7,6 +7,7 @@ package Model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,8 +45,57 @@ public class File_System {
         return false;
     }
     
-    // public boolean
+    public boolean MKDIR(String nombre){
+        try {
+            path_Actual.insertar_Carpeta(nombre);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(File_System.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
     
+    public boolean CHDIR(String carpeta){
+        try {
+            path_Actual = path_Actual.getCarpeta(carpeta);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(File_System.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
     
+    public boolean MFLE(String archivo, String contenido){
+        try {
+            Archivo temp = path_Actual.getArchivo(archivo);
+            ArrayList<Integer> sectores = temp.sectores;
+            sectores = disco.sobre_escribir(sectores, contenido);
+            temp.set_Sectores(sectores);
+            
+            temp.setFecha_Modificacion(new Date());
+            temp.setTamanio(contenido.length());
+            
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(File_System.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+    
+    public ArrayList<String> LDIR(){
+        return path_Actual.getLista();
+    }
+    
+    public ArrayList<String> PPT(String archivo){
+        return path_Actual.getArchivo(archivo).get_Propiedades();
+    }
+    
+
+    public String get_PathActual() {
+        return path_Actual.nombre;
+    }
     
 }

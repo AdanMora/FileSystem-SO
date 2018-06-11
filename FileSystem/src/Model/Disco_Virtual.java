@@ -32,11 +32,9 @@ public class Disco_Virtual {
     
     public boolean hayEspacio(String contenido) throws IOException {
         ArrayList<String> disco = get_Contenido_Disco();
-        float x = contenido.length() / tam_Sector;
-        System.out.println(contenido.length());
-        System.out.println(tam_Sector);
-        System.out.println(contenido.length() / tam_Sector);
+        float x = (float)contenido.length() / (float)tam_Sector;
         if (x > cant_Sectores){
+            System.out.println("Do not fit...");
             return false;
         }
         for (String s : disco) {
@@ -71,9 +69,6 @@ public class Disco_Virtual {
     
     private boolean init_Archivo(){
         try {
-            File file = new File(nombre_Disco);
-            boolean fvar = file.createNewFile();
-            
             ArrayList<String> buffer = new ArrayList();
             String b;
             for (int i = 0; i < cant_Sectores; i++) {
@@ -107,7 +102,6 @@ public class Disco_Virtual {
     }
 
     public ArrayList insertarArchivo(String nombre, String extension, String contenido) {
-        
         ArrayList<Integer> sectores = new ArrayList();
         try {
             if (hayEspacio(contenido)){
@@ -125,6 +119,7 @@ public class Disco_Virtual {
                             buffer = contenido + lineas.get(i);
                             lineas.set(i, buffer.substring(0, tam_Sector - 1));
                             contenido = "";
+                            sectores.add(i);
                         }
                     } 
                 }
@@ -142,9 +137,45 @@ public class Disco_Virtual {
     }
     
     private void printArray(ArrayList<String> lista){
-        for (String x : lista) {
+        lista.forEach((x) -> {
             System.out.println(x);
+        });
+    }
+
+    public ArrayList sobre_escribir(ArrayList<Integer> sectores, String contenido) {
+        try {
+            String buffer;
+            ArrayList<String> lineas = get_Contenido_Disco();
+            
+            float x = (float)contenido.length() / (float)tam_Sector;
+            while (x > sectores.size()){
+                for (int i = 0; i < cant_Sectores; i++) {
+                    if (lineas.get(i).charAt(0) == '0' && !sectores.contains(i)){
+                        sectores.add(i);
+                    }
+                }
+            }
+            
+            for (Integer i : sectores) {
+                buffer = "";
+                if (contenido.length() >= tam_Sector){
+                    buffer = contenido.substring(0, tam_Sector);
+                    contenido = contenido.substring(tam_Sector);
+                    lineas.set(i, buffer);
+                } else {
+                    buffer = contenido + lineas.get(i);
+                    lineas.set(i, buffer.substring(0, tam_Sector - 1));
+                    contenido = "";
+                }
+            }
+            
+            escribir_Archivo(lineas);
+
+            return sectores;
+        } catch (Exception ex) {
+            Logger.getLogger(Disco_Virtual.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
     
     
