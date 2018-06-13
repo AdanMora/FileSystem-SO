@@ -117,7 +117,7 @@ public class Disco_Virtual {
                             sectores.add(i);
                         } else {
                             buffer = contenido + lineas.get(i);
-                            lineas.set(i, buffer.substring(0, tam_Sector - 1));
+                            lineas.set(i, buffer.substring(0, tam_Sector));
                             contenido = "";
                             sectores.add(i);
                         }
@@ -164,7 +164,7 @@ public class Disco_Virtual {
                     lineas.set(i, buffer);
                 } else {
                     buffer = contenido + lineas.get(i);
-                    lineas.set(i, buffer.substring(0, tam_Sector - 1));
+                    lineas.set(i, buffer.substring(0, tam_Sector));
                     contenido = "";
                 }
             }
