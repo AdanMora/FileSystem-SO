@@ -23,7 +23,8 @@ public class File_System {
     public File_System() {}
     
     public boolean CRT(String root, int tam_Sector, int cant_Sector){
-        this.root = new Carpeta(root);
+        this.root = new Carpeta(root, null);
+        this.root.setPadre(this.root);
         this.disco = new Disco_Virtual(root, tam_Sector, cant_Sector);
         this.path_Actual = this.root;
         return true;
@@ -95,7 +96,7 @@ public class File_System {
     
 
     public String get_PathActual() {
-        return path_Actual.nombre;
+        return path_Actual.getNombre();
     }
     
 }

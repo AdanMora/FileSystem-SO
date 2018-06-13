@@ -13,14 +13,20 @@ import java.util.Date;
  * @author Adán
  */
 public class Carpeta {
-    String nombre;
-    ArrayList<Carpeta> carpetas;
-    ArrayList<Archivo> archivos;
+    private String nombre;
+    private ArrayList<Carpeta> carpetas;
+    private ArrayList<Archivo> archivos;
+    private Carpeta padre;
 
-    public Carpeta(String nombre) {
+    public Carpeta(String nombre, Carpeta padre) {
         this.nombre = nombre;
         this.carpetas = new ArrayList();
         this.archivos = new ArrayList();
+        this.padre = padre;
+    }
+
+    public void setPadre(Carpeta padre) {
+        this.padre = padre;
     }
 
     public void insertar_Archivo(String nombre, String extension, int tamanio, ArrayList sectores) {
@@ -29,12 +35,12 @@ public class Carpeta {
     }
     
     public void insertar_Carpeta(String nombre) {
-        carpetas.add(new Carpeta(nombre));
+        carpetas.add(new Carpeta(nombre, this));
     }
 
     public Carpeta getCarpeta(String carpeta) {
         for (Carpeta c : carpetas) {
-            if (c.nombre == carpeta){
+            if (c.nombre.equals(carpeta)){
                 return c;
             }
         }
@@ -52,15 +58,19 @@ public class Carpeta {
 
     public ArrayList<String> getLista() {
         ArrayList<String> lista = new ArrayList();
-        for (Carpeta c : carpetas) {
+        carpetas.forEach((c) -> {
             lista.add(c.nombre);
-        }
+        });
         
-        for (Archivo a : archivos) {
+        archivos.forEach((a) -> {
             lista.add(a.nombre + a.extension);
-        }
+        });
         
         return lista;
+    }
+
+    public String getNombre() {
+        return this.nombre;
     }
     
 }

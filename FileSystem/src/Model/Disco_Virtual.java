@@ -105,7 +105,7 @@ public class Disco_Virtual {
         ArrayList<Integer> sectores = new ArrayList();
         try {
             if (hayEspacio(contenido)){
-                String buffer = "";
+                String buffer;
                 ArrayList<String> lineas = get_Contenido_Disco();
                 for (int i = 0; i < cant_Sectores; i++) {
                     buffer = "";
